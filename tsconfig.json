@@ -28,7 +28,6 @@
   },
   "include": [
     "src",
-    ".eslintrc.cjs"
   ],
   "references": [
     {
