@@ -18,21 +18,21 @@ import {
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch.ts';
 import {
-  resetPasswordActions,
-  resetPasswordReducer,
-} from '../../model/slice/resetPasswordSlice.ts';
-import {
   ReducerList,
   useAsyncReducer,
 } from '@/shared/lib/hooks/useAsyncReducer.ts';
+import { isErrorResponse } from '@/shared/types/errorResponse.ts';
+import { LoadingButton } from '@/shared/ui/LoadingButton';
+import { useResetPassword } from '../../api/resetPasswordApi.ts';
 import {
   getNewPassword,
   getNewPasswordConfirmation,
   getOldPassword,
 } from '../../model/selectors/resetPasswordSelectors.ts';
-import { useResetPassword } from '../../api/resetPasswordApi.ts';
-import { isErrorResponse } from '@/shared/types/errorResponse.ts';
-import { LoadingButton } from '@/shared/ui/LoadingButton';
+import {
+  resetPasswordActions,
+  resetPasswordReducer,
+} from '../../model/slice/resetPasswordSlice.ts';
 
 const reducers: ReducerList = {
   resetPassword: resetPasswordReducer,

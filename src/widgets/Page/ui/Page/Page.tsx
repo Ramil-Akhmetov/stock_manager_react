@@ -1,6 +1,6 @@
-import { memo, ReactNode } from 'react';
 import { Box } from '@mui/material';
 import Toolbar from '@mui/material/Toolbar';
+import { memo, ReactNode } from 'react';
 
 interface PageProps {
   children: ReactNode;

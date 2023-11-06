@@ -1,16 +1,16 @@
-import { memo } from 'react';
 import { Button, Typography } from '@mui/material';
+import { memo } from 'react';
 import { useSelector } from 'react-redux';
-import { getCounterValue } from '../../model/selectors/counter.ts';
-import {
-  counterActions,
-  counterReducer,
-} from '../../model/slice/CounterSlice.ts';
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch.ts';
 import {
   ReducerList,
   useAsyncReducer,
 } from '@/shared/lib/hooks/useAsyncReducer.ts';
+import { getCounterValue } from '../../model/selectors/counter.ts';
+import {
+  counterActions,
+  counterReducer,
+} from '../../model/slice/CounterSlice.ts';
 
 const reducers: ReducerList = {
   counter: counterReducer,

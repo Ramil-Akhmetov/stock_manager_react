@@ -1,10 +1,10 @@
-import { ReactNode, useMemo, useState } from 'react';
 import { PaletteMode } from '@mui/material';
 import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
-import { ThemeContext } from '../lib/ThemeContext';
-import { lightTheme } from '../lib/themes/light/lightTheme';
-import { darkTheme } from '../lib/themes/dark/darkTheme';
+import { ReactNode, useMemo, useState } from 'react';
 import { LOCAL_STORAGE_THEME_MODE_KEY } from '@/shared/consts/localstorage.ts';
+import { ThemeContext } from '../lib/ThemeContext';
+import { darkTheme } from '../lib/themes/dark/darkTheme';
+import { lightTheme } from '../lib/themes/light/lightTheme';
 
 const defaultMode =
   (localStorage.getItem(LOCAL_STORAGE_THEME_MODE_KEY) as PaletteMode) ||

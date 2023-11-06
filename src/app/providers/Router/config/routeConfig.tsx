@@ -1,3 +1,8 @@
+import { ErrorPage } from '@/pages/ErrorPage';
+import { LoginPage } from '@/pages/LoginPage';
+import { MainPage } from '@/pages/MainPage';
+import { ProfileEditPage } from '@/pages/ProfileEditPage';
+import { ProfilePage } from '@/pages/ProfilePage';
 import {
   AppRoute,
   getRouteLogin,
@@ -6,11 +11,6 @@ import {
   getRouteProfile,
 } from '@/shared/consts/router';
 import { AppRouteProps } from '@/shared/types/router';
-import { MainPage } from '@/pages/MainPage';
-import { LoginPage } from '@/pages/LoginPage';
-import { ErrorPage } from '@/pages/ErrorPage';
-import { ProfilePage } from '@/pages/ProfilePage';
-import { ProfileEditPage } from '@/pages/ProfileEditPage';
 
 export const routeConfig: Record<AppRoute, AppRouteProps> = {
   [AppRoute.MAIN]: {

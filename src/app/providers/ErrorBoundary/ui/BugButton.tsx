@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import { Button } from '@mui/material';
+import { useEffect, useState } from 'react';
 
 export function BugButton() {
   const [error, setError] = useState(false);

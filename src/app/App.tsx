@@ -1,11 +1,11 @@
-import { Suspense, useEffect } from 'react';
 import { Box } from '@mui/material';
+import { Suspense, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { AppRouter } from './providers/Router';
 import { Navbar } from '@/widgets/Navbar';
-import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch.ts';
-import { getUserInited, initAuthData } from '@/entities/User';
 import { PageLoader } from '@/widgets/PageLoader';
+import { getUserInited, initAuthData } from '@/entities/User';
+import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch.ts';
+import { AppRouter } from './providers/Router';
 
 function App() {
   const dispatch = useAppDispatch();

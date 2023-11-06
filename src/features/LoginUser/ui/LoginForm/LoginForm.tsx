@@ -1,3 +1,4 @@
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import {
   Avatar,
   Box,
@@ -7,25 +8,24 @@ import {
   Typography,
 } from '@mui/material';
 import { ChangeEvent, FormEvent, memo, useCallback, useEffect } from 'react';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { initAuthData } from '@/entities/User';
+import { LOCAL_STORAGE_ACCESS_KEY } from '@/shared/consts/localstorage.ts';
+import { getRouteMain } from '@/shared/consts/router.ts';
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch.ts';
+import {
+  ReducerList,
+  useAsyncReducer,
+} from '@/shared/lib/hooks/useAsyncReducer.ts';
+import { isErrorResponse } from '@/shared/types/errorResponse.ts';
+import { LoadingButton } from '@/shared/ui/LoadingButton';
+import { useLoginUser } from '../../api/loginUserApi.ts';
 import {
   getLoginEmail,
   getLoginPassword,
 } from '../../model/selectors/loginUserSelectors.ts';
 import { loginActions, loginReducer } from '../../model/slice/loginSlice.ts';
-import {
-  ReducerList,
-  useAsyncReducer,
-} from '@/shared/lib/hooks/useAsyncReducer.ts';
-import { useLoginUser } from '@/features/LoginUser/api/loginUserApi.ts';
-import { isErrorResponse } from '@/shared/types/errorResponse.ts';
-import { initAuthData } from '@/entities/User/model/services/initAuthData.ts';
-import { LOCAL_STORAGE_ACCESS_KEY } from '@/shared/consts/localstorage.ts';
-import { getRouteMain } from '@/shared/consts/router.ts';
-import { LoadingButton } from '@/shared/ui/LoadingButton';
 
 const reducers: ReducerList = {
   loginForm: loginReducer,

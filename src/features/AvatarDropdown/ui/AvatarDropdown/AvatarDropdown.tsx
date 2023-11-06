@@ -1,4 +1,3 @@
-import { memo, useCallback, useState } from 'react';
 import {
   Avatar,
   Box,
@@ -8,6 +7,7 @@ import {
   Tooltip,
 } from '@mui/material';
 import Typography from '@mui/material/Typography';
+import { memo, useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getUserAuthData, userActions } from '@/entities/User';
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch.ts';

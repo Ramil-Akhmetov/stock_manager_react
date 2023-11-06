@@ -1,5 +1,5 @@
-import { memo } from 'react';
 import { Avatar, Box, Grid, TextField } from '@mui/material';
+import { memo } from 'react';
 import { useSelector } from 'react-redux';
 import { getUserAuthData } from '@/entities/User';
 import { LoadingButton } from '@/shared/ui/LoadingButton';

@@ -4,10 +4,10 @@ import {
   Reducer,
   ReducersMapObject,
 } from '@reduxjs/toolkit';
-import { rtkApi } from '@/shared/api/rtkApi';
-import { StateSchema } from './StateSchema';
-import { createReducerManager } from './reducerManager';
 import { userReducer } from '@/entities/User';
+import { rtkApi } from '@/shared/api/rtkApi';
+import { createReducerManager } from './reducerManager';
+import { StateSchema } from './StateSchema';
 
 export function createReduxStore(
   initialState?: StateSchema,

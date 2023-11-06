@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import {
   Avatar,
   Box,
@@ -9,9 +8,10 @@ import {
   Typography,
 } from '@mui/material';
 import Toolbar from '@mui/material/Toolbar';
+import { memo } from 'react';
 import { useSelector } from 'react-redux';
-import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch.ts';
 import { getUserAuthData } from '@/entities/User';
+import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch.ts';
 
 function ProfilePage() {
   const dispatch = useAppDispatch();

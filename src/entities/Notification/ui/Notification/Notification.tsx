@@ -1,7 +1,7 @@
-import { memo, SyntheticEvent, useCallback } from 'react';
 import { Alert, Snackbar } from '@mui/material';
+import { memo, SyntheticEvent, useCallback } from 'react';
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch.ts';
-import { notificationActions } from '@/entities/Notification/model/slice/notificationSlice.ts';
+import { notificationActions } from '../../model/slice/notificationSlice.ts';
 
 interface NotificationProps {}
 

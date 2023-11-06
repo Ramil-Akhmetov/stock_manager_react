@@ -1,6 +1,5 @@
 import { rtkApi } from '@/shared/api/rtkApi';
-import { LoginSchema } from '@/features/LoginUser';
-import { ResetPasswordSchema } from '@/features/ResetPassword';
+import { ResetPasswordSchema } from '../model/types/resetPasswordSchema.ts';
 
 const resetPasswordApi = rtkApi.injectEndpoints({
   endpoints: (build) => ({

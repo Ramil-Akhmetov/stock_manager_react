@@ -5,12 +5,12 @@ import {
   Reducer,
   ReducersMapObject,
 } from '@reduxjs/toolkit';
-import { rtkApi } from '@/shared/api/rtkApi';
-import { CounterSchema } from '@/entities/Counter';
-import { UserSchema } from '@/entities/User';
 import { LoginSchema } from '@/features/LoginUser';
 import { ResetPasswordSchema } from '@/features/ResetPassword';
 import { BarcodeSchema } from '@/features/ScanTest';
+import { CounterSchema } from '@/entities/Counter';
+import { UserSchema } from '@/entities/User';
+import { rtkApi } from '@/shared/api/rtkApi';
 
 export interface StateSchema {
   [rtkApi.reducerPath]: ReturnType<typeof rtkApi.reducer>;

@@ -1,4 +1,4 @@
-import { initAuthData } from '@/entities/User/model/services/initAuthData.ts';
+import { initAuthData } from './model/services/initAuthData.ts';
 
 export { getUserAuthData } from './model/selectors/getUserAuthData.ts';
 

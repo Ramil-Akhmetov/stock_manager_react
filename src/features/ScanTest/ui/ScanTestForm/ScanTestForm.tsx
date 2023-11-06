@@ -4,22 +4,19 @@ import {
   FormEvent,
   KeyboardEvent,
   memo,
-  SyntheticEvent,
   useCallback,
-  useEffect,
 } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch.ts';
-import {
-  barcodeActions,
-  barcodeReducer,
-} from '../../model/slice/barcodeSlice.ts';
 import {
   ReducerList,
   useAsyncReducer,
 } from '@/shared/lib/hooks/useAsyncReducer.ts';
 import { getBarcode } from '../../model/selectors/barcodeSelectors.ts';
-import { useResetPassword } from '../../api/resetPasswordApi.ts';
+import {
+  barcodeActions,
+  barcodeReducer,
+} from '../../model/slice/barcodeSlice.ts';
 
 const reducers: ReducerList = {
   barcodeForm: barcodeReducer,
@@ -29,9 +26,6 @@ const ScanTestForm = memo(() => {
   useAsyncReducer({ reducers });
   const dispatch = useAppDispatch();
   const barcode = useSelector(getBarcode);
-
-  // const [resetPassword, { isLoading, isError, error, data, isSuccess }] =
-  //   useResetPassword();
 
   const onChangeBarcode = useCallback(
     (evt: ChangeEvent<HTMLInputElement>) => {

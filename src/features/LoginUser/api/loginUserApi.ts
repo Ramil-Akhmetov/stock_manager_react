@@ -1,6 +1,6 @@
+import { User } from '@/entities/User';
 import { rtkApi } from '@/shared/api/rtkApi';
 import { LoginSchema } from '../model/types/loginSchema.ts';
-import { User } from '@/entities/User';
 
 const loginUserApi = rtkApi.injectEndpoints({
   endpoints: (build) => ({

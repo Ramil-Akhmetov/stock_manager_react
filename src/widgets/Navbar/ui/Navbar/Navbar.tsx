@@ -1,6 +1,7 @@
-import * as React from 'react';
+import MenuIcon from '@mui/icons-material/Menu';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
@@ -8,18 +9,17 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+import * as React from 'react';
 import { memo } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getNavbarItems } from '@/widgets/Navbar/model/selectors/getNavbarItems.ts';
 import { ThemeSwitcher } from '@/widgets/ThemeSwitcher';
-import { AvatarDropdown } from '../../../../features/AvatarDropdown';
+import { AvatarDropdown } from '@/features/AvatarDropdown';
 import { getUserAuthData } from '@/entities/User';
 import { getRouteMain } from '@/shared/consts/router.ts';
+import { getNavbarItems } from '../../model/selectors/getNavbarItems.ts';
 
 const drawerWidth = 240;
 
