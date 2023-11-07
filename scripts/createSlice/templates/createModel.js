@@ -1,5 +1,4 @@
 import fs from 'fs/promises';
-
 import { resolveRoot } from '../resolveRoot.js';
 import { reduxSliceTemplate } from './reduxSliceTemplate.js';
 import { schemaTypeTemplate } from './schemaTypeTemplate.js';

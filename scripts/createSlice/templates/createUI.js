@@ -1,6 +1,6 @@
 import fs from 'fs/promises';
-import { resolveRoot } from '../resolveRoot.js';
 import { firstCharUpperCase } from '../firstCharUpperCase.js';
+import { resolveRoot } from '../resolveRoot.js';
 import { componentTemplate } from './componentTemplate.js';
 
 export const createUI = async (layer, sliceName) => {

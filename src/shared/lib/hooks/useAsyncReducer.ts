@@ -41,5 +41,5 @@ export const useAsyncReducer = (props: DynamicModuleLoaderProps) => {
         });
       }
     };
-  }, []);
+  }, [dispatch, reducers, removeAfterUnmount, store.reducerManager]);
 };

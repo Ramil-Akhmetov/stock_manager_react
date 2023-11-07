@@ -8,7 +8,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:react-hooks/recommended',
 
-    "plugin:@conarti/feature-sliced/recommended",
+    'plugin:@conarti/feature-sliced/recommended',
     // last
     'plugin:prettier/recommended',
   ],
@@ -38,5 +38,6 @@ module.exports = {
     '@typescript-eslint/no-var-requires': 'off',
 
     'import/no-extraneous-dependencies': 'warn',
+    'react-hooks/exhaustive-deps': 'error',
   },
 };

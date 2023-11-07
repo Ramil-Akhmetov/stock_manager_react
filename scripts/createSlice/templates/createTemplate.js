@@ -1,9 +1,9 @@
 import fs from 'fs/promises';
+import { firstCharUpperCase } from '../firstCharUpperCase.js';
 import { resolveRoot } from '../resolveRoot.js';
 import { createModel } from './createModel.js';
-import { createUI } from './createUI.js';
 import { createPublicApi } from './createPublicApi.js';
-import { firstCharUpperCase } from '../firstCharUpperCase.js';
+import { createUI } from './createUI.js';
 
 export const createTemplate = async (layer, sliceName) => {
   try {

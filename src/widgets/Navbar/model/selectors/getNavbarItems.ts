@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { getUserAuthData } from '@/entities/User';
-import { getRouteLogin, getRouteMain } from '@/shared/consts/router';
+import { getRouteLogin } from '@/shared/consts/router';
 import { NavbarItem } from '../types/navbar.ts';
 
 export const getNavbarItems = createSelector(getUserAuthData, (userData) => {
