@@ -40,7 +40,7 @@ const ScanTestForm = memo(() => {
         evt.preventDefault();
       }
     },
-    [dispatch]
+    []
   );
 
   const onBarcodeSubmit = useCallback(

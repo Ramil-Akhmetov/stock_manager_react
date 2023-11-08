@@ -35,11 +35,12 @@ export const useAsyncReducer = (props: DynamicModuleLoaderProps) => {
 
     return () => {
       if (removeAfterUnmount) {
-        Object.entries(reducers).forEach(([name, reducer]) => {
+        Object.entries(reducers).forEach(([name]) => {
           store.reducerManager.remove(name as StateSchemaKey);
           dispatch({ type: `@DESTROY ${name} reducer` });
         });
       }
     };
-  }, [dispatch, reducers, removeAfterUnmount, store.reducerManager]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 };

@@ -5,7 +5,7 @@ import { notificationActions } from '../../model/slice/notificationSlice.ts';
 
 interface NotificationProps {}
 
-export const Notification = memo(() => {
+export const Notification = memo((props: NotificationProps) => {
   const dispatch = useAppDispatch();
 
   const onCloseStackbar = useCallback(

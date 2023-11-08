@@ -1,4 +1,3 @@
-import { User } from '@/entities/User';
 import { rtkApi } from '@/shared/api/rtkApi';
 import { LoginSchema } from '../model/types/loginSchema.ts';
 
