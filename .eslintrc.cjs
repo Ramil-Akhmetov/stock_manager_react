@@ -7,8 +7,8 @@ module.exports = {
         'airbnb/hooks',
         'plugin:@typescript-eslint/recommended',
         'plugin:react-hooks/recommended',
-
         'plugin:@conarti/feature-sliced/recommended',
+
         // last
         'plugin:prettier/recommended',
     ],
@@ -18,7 +18,11 @@ module.exports = {
         sourceType: 'module',
         project: ['./tsconfig.json', './tsconfig.node.json'],
     },
-    plugins: ['react-refresh', 'prettier'],
+    plugins: [
+        'react-refresh',
+        'prettier',
+        "@conarti/feature-sliced",
+    ],
     rules: {
         'react-refresh/only-export-components': [
             'off',
@@ -37,8 +41,8 @@ module.exports = {
         '@typescript-eslint/ban-ts-comment': 'warn',
         '@typescript-eslint/no-unused-vars': 'warn',
         'import/no-extraneous-dependencies': 'warn',
-        'react-hooks/rules-of-hooks': 'error',
+        "@conarti/feature-sliced/layers-slices": "warn",
 
-        'react-hooks/exhaustive-deps': 'warn',
+        'react-hooks/rules-of-hooks': 'error',
     },
 };
