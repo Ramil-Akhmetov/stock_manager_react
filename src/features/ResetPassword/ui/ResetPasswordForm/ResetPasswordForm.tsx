@@ -176,12 +176,12 @@ const ResetPasswordForm = memo(() => {
             onChange={onChangeNewPasswordConfirmation}
             error={
               isErrorResponse(error)
-                ? Boolean(error.data.errors?.new_password_confirmed)
+                ? Boolean(error.data.errors?.new_password_confirmation)
                 : false
             }
             helperText={
               isErrorResponse(error)
-                ? error.data.errors?.new_password_confirmed
+                ? error.data.errors?.new_password_confirmation
                 : null
             }
           />

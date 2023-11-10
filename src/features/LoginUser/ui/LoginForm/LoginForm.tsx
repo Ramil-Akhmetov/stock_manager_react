@@ -1,5 +1,6 @@
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import {
+  Alert,
   Avatar,
   Box,
   Container,
@@ -86,22 +87,20 @@ const LoginForm = memo(() => {
         </Typography>
         <Box component="form" onSubmit={onLogin} sx={{ mt: 1 }}>
           {error && isErrorResponse(error) && (
-            <Typography color="red">{error.data.message}</Typography>
+            <Alert severity="error" variant="outlined">
+              {error.data.message}
+            </Alert>
           )}
           <TextField
             margin="normal"
             fullWidth
-            id="email"
             label="Email"
-            name="email"
-            autoComplete="email"
+            type="email"
             autoFocus
             required
             value={email}
             onChange={onChangeEmail}
-            error={
-              isErrorResponse(error) ? Boolean(error.data.errors?.email) : false
-            }
+            error={isErrorResponse(error) && Boolean(error.data.errors?.email)}
             helperText={
               isErrorResponse(error) ? error.data.errors?.email : null
             }
@@ -113,8 +112,6 @@ const LoginForm = memo(() => {
             label="Пароль"
             type="password"
             required
-            id="password"
-            autoComplete="current-password"
             value={password}
             onChange={onChangePassword}
             error={
