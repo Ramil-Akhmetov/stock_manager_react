@@ -10,16 +10,29 @@ export const createPublicApi = async (layer, sliceName) => {
     if (layer === 'widgets') {
       await fs.writeFile(
         resolveRoot('src', layer, sliceName, 'index.ts'),
-        `export { ${componentName} } from './ui/${componentName}/${componentName}';
+        `import ${componentName} from './ui/${componentName}/${componentName}';
+
+export { ${componentName} };
+`
+      );
+    } else if (layer === 'pages') {
+      await fs.writeFile(
+        resolveRoot('src', layer, sliceName, 'index.ts'),
+        `import { ${componentName}Async } from './ui/${componentName}/${componentName}.async.tsx';
+
+export { ${componentName}Async as ${componentName} };
 `
       );
     } else {
       await fs.writeFile(
         resolveRoot('src', layer, sliceName, 'index.ts'),
-        `export { ${componentName} } from './ui/${componentName}/${componentName}';
+        `import ${componentName} from './ui/${componentName}/${componentName}';
+
 export type { ${firstCharUpperCase(
           schemaName
-        )} } from './model/types/${schemaName}';
+        )} } from './model/types/testSchema';
+
+export { ${componentName} };
 `
       );
     }

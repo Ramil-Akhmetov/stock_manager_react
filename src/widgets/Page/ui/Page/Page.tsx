@@ -8,7 +8,7 @@ interface PageProps {
 export const Page = memo((props: PageProps) => {
   const { children } = props;
   return (
-    <Box component="main" sx={{ p: 3 }}>
+    <Box component="main" sx={{ p: 3 }} width="100%">
       <Toolbar />
       {children}
     </Box>

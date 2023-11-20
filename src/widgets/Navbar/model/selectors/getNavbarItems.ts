@@ -1,15 +1,19 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { getUserAuthData } from '@/entities/User';
-import { getRouteLogin } from '@/shared/consts/router';
+import { getRouteLogin, getRouteRegister } from '@/shared/consts/router';
 import { NavbarItem } from '../types/navbar.ts';
 
 export const getNavbarItems = createSelector(getUserAuthData, (userData) => {
-  // todo selectors = (state: StateSchema) => state.user.authData;
+  // TODO selectors = (state: StateSchema) => state.user.authData;
   // public routes
   const sidebarItemsList: NavbarItem[] = [
     {
       path: getRouteLogin(),
       text: 'Вход',
+    },
+    {
+      path: getRouteRegister(),
+      text: 'Регистрация',
     },
   ];
 

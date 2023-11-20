@@ -39,7 +39,7 @@ class ErrorBoundary extends React.Component<
         <Suspense fallback="">
           <ErrorPage
             message="Произошла непредвиденная ошибка"
-            statusCode="5XX"
+            statusCode="500"
             reloadButton
           />
         </Suspense>

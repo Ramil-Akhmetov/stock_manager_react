@@ -3,12 +3,14 @@ import { LoginPage } from '@/pages/LoginPage';
 import { MainPage } from '@/pages/MainPage';
 import { ProfileEditPage } from '@/pages/ProfileEditPage';
 import { ProfilePage } from '@/pages/ProfilePage';
+import { RegisterPage } from '@/pages/RegisterPage';
 import {
   AppRoute,
   getRouteLogin,
   getRouteMain,
   getRouteProfileEdit,
   getRouteProfile,
+  getRouteRegister,
 } from '@/shared/consts/router';
 import { AppRouteProps } from '@/shared/types/router';
 
@@ -31,6 +33,11 @@ export const routeConfig: Record<AppRoute, AppRouteProps> = {
   [AppRoute.LOGIN]: {
     path: getRouteLogin(),
     element: <LoginPage />,
+    guestOnly: true,
+  },
+  [AppRoute.REGISTER]: {
+    path: getRouteRegister(),
+    element: <RegisterPage />,
     guestOnly: true,
   },
   // last

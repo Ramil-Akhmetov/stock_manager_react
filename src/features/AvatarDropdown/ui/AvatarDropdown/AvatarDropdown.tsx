@@ -7,6 +7,7 @@ import {
   Tooltip,
 } from '@mui/material';
 import Typography from '@mui/material/Typography';
+import { enqueueSnackbar } from 'notistack';
 import { memo, useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getUserAuthData, userActions } from '@/entities/User';
@@ -25,8 +26,12 @@ export const AvatarDropdown = memo(() => {
     setAnchorElUser(null);
   }, []);
 
+  // TODO maybe add logout as feature
   const onLogout = useCallback(() => {
     dispatch(userActions.logout());
+    enqueueSnackbar('Вы успешно вышли из аккаунта', {
+      variant: 'success',
+    });
     setAnchorElUser(null);
   }, [dispatch]);
 

@@ -1,3 +1,5 @@
+import { UserPermission, UserRole } from '../consts/userConsts.ts';
+
 export interface User {
   id: string;
   name: string;
@@ -7,6 +9,8 @@ export interface User {
   email: string;
   photo: string;
   extra_attributes: Record<string, string>;
+  permissions: UserPermission[];
+  roles: UserRole[];
 }
 
 export interface UserSchema {

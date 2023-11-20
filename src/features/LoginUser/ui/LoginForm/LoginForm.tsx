@@ -1,14 +1,7 @@
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import {
-  Alert,
-  Avatar,
-  Box,
-  Container,
-  Link,
-  TextField,
-  Typography,
-} from '@mui/material';
-import { ChangeEvent, FormEvent, memo, useCallback, useEffect } from 'react';
+import { Alert, Avatar, Box, Link, TextField, Typography } from '@mui/material';
+import { useSnackbar } from 'notistack';
+import { ChangeEvent, FormEvent, memo, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { initAuthData } from '@/entities/User';
@@ -34,19 +27,30 @@ const reducers: ReducerList = {
 
 const LoginForm = memo(() => {
   useAsyncReducer({ reducers });
+  const { enqueueSnackbar } = useSnackbar();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const email = useSelector(getLoginEmail);
   const password = useSelector(getLoginPassword);
-  const [loginUser, { isLoading, error, data, isSuccess }] = useLoginUser();
+  const [loginUser, { isLoading, error }] = useLoginUser();
+  const onLogin = useCallback(
+    async (evt: FormEvent) => {
+      evt.preventDefault();
+      try {
+        const response = await loginUser({ email, password }).unwrap();
 
-  useEffect(() => {
-    if (isSuccess && data) {
-      localStorage.setItem(LOCAL_STORAGE_ACCESS_KEY, data.token);
-      dispatch(initAuthData());
-      navigate(getRouteMain());
-    }
-  }, [dispatch, isSuccess, data, navigate]);
+        localStorage.setItem(LOCAL_STORAGE_ACCESS_KEY, response.token);
+        dispatch(initAuthData());
+        navigate(getRouteMain());
+        enqueueSnackbar('Вы успешно вошли в систему', { variant: 'success' });
+      } catch (e) {
+        if (isErrorResponse(e)) {
+          enqueueSnackbar(e.data.message, { variant: 'error' });
+        }
+      }
+    },
+    [loginUser, email, password, dispatch, navigate, enqueueSnackbar]
+  );
 
   const onChangeEmail = useCallback(
     (evt: ChangeEvent<HTMLInputElement>) => {
@@ -61,83 +65,64 @@ const LoginForm = memo(() => {
     },
     [dispatch]
   );
-
-  const onLogin = useCallback(
-    async (evt: FormEvent) => {
-      evt.preventDefault();
-      await loginUser({ email, password });
-    },
-    [loginUser, email, password]
-  );
   return (
-    <Container component="main" maxWidth="xs">
-      <Box
-        sx={{
-          marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
+        <LockOutlinedIcon />
+      </Avatar>
+      <Typography component="h1" variant="h5">
+        Вход
+      </Typography>
+      <Box component="form" onSubmit={onLogin} sx={{ mt: 1 }}>
+        {isErrorResponse(error) && (
+          <Alert severity="error" variant="outlined">
+            {error.data.message}
+          </Alert>
+        )}
+        <TextField
+          margin="normal"
+          fullWidth
+          label="Email"
+          type="email"
+          autoFocus
+          required
+          value={email}
+          onChange={onChangeEmail}
+          error={isErrorResponse(error) && !!error.data.errors?.email}
+          helperText={isErrorResponse(error) && error.data.errors?.email}
+        />
+        <TextField
+          margin="normal"
+          fullWidth
+          name="password"
+          label="Пароль"
+          type="password"
+          required
+          value={password}
+          onChange={onChangePassword}
+          error={isErrorResponse(error) && !!error.data.errors?.password}
+          helperText={isErrorResponse(error) && error.data.errors?.password}
+        />
+        <LoadingButton
+          type="submit"
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+          loading={isLoading}
+        >
           Войти
-        </Typography>
-        <Box component="form" onSubmit={onLogin} sx={{ mt: 1 }}>
-          {error && isErrorResponse(error) && (
-            <Alert severity="error" variant="outlined">
-              {error.data.message}
-            </Alert>
-          )}
-          <TextField
-            margin="normal"
-            fullWidth
-            label="Email"
-            type="email"
-            autoFocus
-            required
-            value={email}
-            onChange={onChangeEmail}
-            error={isErrorResponse(error) && Boolean(error.data.errors?.email)}
-            helperText={
-              isErrorResponse(error) ? error.data.errors?.email : null
-            }
-          />
-          <TextField
-            margin="normal"
-            fullWidth
-            name="password"
-            label="Пароль"
-            type="password"
-            required
-            value={password}
-            onChange={onChangePassword}
-            error={
-              isErrorResponse(error)
-                ? Boolean(error.data.errors?.password)
-                : false
-            }
-            helperText={
-              isErrorResponse(error) ? error.data.errors?.password : null
-            }
-          />
-          <LoadingButton
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            loading={isLoading}
-          >
-            Войти
-          </LoadingButton>
-          <Link to="/" variant="body2" component={RouterLink}>
-            Забыли пароль?
-          </Link>
-        </Box>
+        </LoadingButton>
+        <Link to="/" variant="body2" component={RouterLink}>
+          Забыли пароль?
+        </Link>
       </Box>
-    </Container>
+    </Box>
   );
 });
 

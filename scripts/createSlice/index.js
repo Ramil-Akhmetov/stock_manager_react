@@ -1,7 +1,10 @@
 import { createTemplate } from './templates/createTemplate.js';
 
-const layer = process.argv[2];
-const sliceName = process.argv[3];
+let layer = process.argv[2];
+let sliceName = process.argv[3];
+
+layer = layer[0].toLowerCase() + layer.slice(1);
+sliceName = sliceName[0].toLowerCase() + sliceName.slice(1);
 
 const layers = ['features', 'entities', 'pages', 'widgets'];
 

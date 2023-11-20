@@ -32,7 +32,7 @@ export const Navbar = memo(() => {
     setMobileOpen((prevState) => !prevState);
   };
 
-  // todo create component from it
+  // TODO create component from it
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Typography

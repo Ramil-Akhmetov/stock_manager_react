@@ -6,6 +6,7 @@ import {
   ReducersMapObject,
 } from '@reduxjs/toolkit';
 import { LoginSchema } from '@/features/LoginUser';
+import { RegisterUserSchema } from '@/features/RegisterUser';
 import { ResetPasswordSchema } from '@/features/ResetPassword';
 import { BarcodeSchema } from '@/features/ScanTest';
 import { CounterSchema } from '@/entities/Counter';
@@ -19,6 +20,7 @@ export interface StateSchema {
   // Асинхронные редюсеры
   counter?: CounterSchema;
   loginForm?: LoginSchema;
+  registerUser?: RegisterUserSchema;
   resetPassword?: ResetPasswordSchema;
   barcodeForm?: BarcodeSchema;
 }

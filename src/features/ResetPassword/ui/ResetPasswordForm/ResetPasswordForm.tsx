@@ -1,20 +1,6 @@
-import {
-  Alert,
-  Box,
-  Grid,
-  Snackbar,
-  TextField,
-  Typography,
-} from '@mui/material';
-import {
-  ChangeEvent,
-  FormEvent,
-  memo,
-  SyntheticEvent,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import { Box, Grid, TextField, Typography } from '@mui/material';
+import { useSnackbar } from 'notistack';
+import { ChangeEvent, FormEvent, memo, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch.ts';
 import {
@@ -40,35 +26,12 @@ const reducers: ReducerList = {
 
 const ResetPasswordForm = memo(() => {
   useAsyncReducer({ reducers });
-  const [isStackbarOpen, setIsStackbarOpen] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
   const dispatch = useAppDispatch();
   const old_password = useSelector(getOldPassword);
   const new_password = useSelector(getNewPassword);
   const new_password_confirmation = useSelector(getNewPasswordConfirmation);
-  const [resetPassword, { isLoading, isError, error, data, isSuccess }] =
-    useResetPassword();
-
-  useEffect(() => {
-    setIsStackbarOpen(isSuccess || isError);
-  }, [isSuccess, isError]);
-
-  useEffect(() => {
-    if (isSuccess) {
-      dispatch(resetPasswordActions.setOldPassword(''));
-      dispatch(resetPasswordActions.setNewPassword(''));
-      dispatch(resetPasswordActions.setNewPasswordConfirmation(''));
-    }
-  }, [isSuccess, dispatch]);
-
-  const onCloseStackbar = useCallback(
-    (evt: SyntheticEvent | Event, reason?: string) => {
-      if (reason === 'clickaway') {
-        return;
-      }
-      setIsStackbarOpen(false);
-    },
-    []
-  );
+  const [resetPassword, { isLoading, error }] = useResetPassword();
 
   const onChangeOldPassword = useCallback(
     (evt: ChangeEvent<HTMLInputElement>) => {
@@ -96,33 +59,34 @@ const ResetPasswordForm = memo(() => {
   const onResetPassword = useCallback(
     async (evt: FormEvent) => {
       evt.preventDefault();
-      await resetPassword({
-        old_password,
-        new_password,
-        new_password_confirmation,
-      });
+      try {
+        const response = await resetPassword({
+          old_password,
+          new_password,
+          new_password_confirmation,
+        }).unwrap();
+
+        dispatch(resetPasswordActions.setOldPassword(''));
+        dispatch(resetPasswordActions.setNewPassword(''));
+        dispatch(resetPasswordActions.setNewPasswordConfirmation(''));
+        enqueueSnackbar(response.message, { variant: 'success' });
+      } catch (e) {
+        if (isErrorResponse(e)) {
+          enqueueSnackbar(e.data.message, { variant: 'error' });
+        }
+      }
     },
-    [resetPassword, old_password, new_password, new_password_confirmation]
+    [
+      resetPassword,
+      old_password,
+      new_password,
+      new_password_confirmation,
+      dispatch,
+      enqueueSnackbar,
+    ]
   );
   return (
     <Box>
-      <Snackbar
-        open={isStackbarOpen}
-        autoHideDuration={6000}
-        onClose={onCloseStackbar}
-      >
-        <Alert
-          onClose={onCloseStackbar}
-          severity={isError ? 'error' : 'success'}
-          variant="filled"
-          sx={{ width: '100%' }}
-        >
-          {/* todo maybe error */}
-          {isError && isErrorResponse(error)
-            ? error?.data.message
-            : data?.message}
-        </Alert>
-      </Snackbar>
       <Grid container spacing={2} component="form" onSubmit={onResetPassword}>
         <Grid item xs={12}>
           <Typography variant="h4">Изменить пароль</Typography>
@@ -136,13 +100,9 @@ const ResetPasswordForm = memo(() => {
             required
             value={old_password}
             onChange={onChangeOldPassword}
-            error={
-              isErrorResponse(error)
-                ? Boolean(error.data.errors?.old_password)
-                : false
-            }
+            error={isErrorResponse(error) && !!error.data.errors?.old_password}
             helperText={
-              isErrorResponse(error) ? error.data.errors?.old_password : null
+              isErrorResponse(error) && error.data.errors?.old_password
             }
           />
         </Grid>
@@ -155,13 +115,9 @@ const ResetPasswordForm = memo(() => {
             required
             value={new_password}
             onChange={onChangeNewPassword}
-            error={
-              isErrorResponse(error)
-                ? Boolean(error.data.errors?.new_password)
-                : false
-            }
+            error={isErrorResponse(error) && !!error.data.errors?.new_password}
             helperText={
-              isErrorResponse(error) ? error.data.errors?.new_password : null
+              isErrorResponse(error) && error.data.errors?.new_password
             }
           />
         </Grid>
@@ -175,14 +131,12 @@ const ResetPasswordForm = memo(() => {
             value={new_password_confirmation}
             onChange={onChangeNewPasswordConfirmation}
             error={
-              isErrorResponse(error)
-                ? Boolean(error.data.errors?.new_password_confirmation)
-                : false
+              isErrorResponse(error) &&
+              !!error.data.errors?.new_password_confirmation
             }
             helperText={
-              isErrorResponse(error)
-                ? error.data.errors?.new_password_confirmation
-                : null
+              isErrorResponse(error) &&
+              error.data.errors?.new_password_confirmation
             }
           />
         </Grid>
