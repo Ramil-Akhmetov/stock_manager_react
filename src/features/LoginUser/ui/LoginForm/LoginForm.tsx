@@ -38,8 +38,8 @@ const LoginForm = memo(() => {
       evt.preventDefault();
       try {
         const response = await loginUser({ email, password }).unwrap();
-
         localStorage.setItem(LOCAL_STORAGE_ACCESS_KEY, response.token);
+
         dispatch(initAuthData());
         navigate(getRouteMain());
         enqueueSnackbar('Вы успешно вошли в систему', { variant: 'success' });

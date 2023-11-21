@@ -15,7 +15,7 @@ import * as React from 'react';
 import { memo } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { AvatarDropdown } from '@/features/AvatarDropdown';
+import { AvatarDropdown } from '@/widgets/AvatarDropdown/index.ts'; // TODO fix widget in widgets
 import { ThemeSwitcher } from '@/features/ThemeSwitcher';
 import { getUserAuthData } from '@/entities/User';
 import { getRouteMain } from '@/shared/consts/router.ts';

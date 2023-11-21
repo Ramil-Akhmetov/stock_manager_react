@@ -30,7 +30,7 @@ export { ${componentName}Async as ${componentName} };
 
 export type { ${firstCharUpperCase(
           schemaName
-        )} } from './model/types/testSchema';
+        )} } from './model/types/${schemaName}';
 
 export { ${componentName} };
 `
