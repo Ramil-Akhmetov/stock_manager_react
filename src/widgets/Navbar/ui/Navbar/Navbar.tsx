@@ -50,6 +50,7 @@ export const Navbar = memo(() => {
           (item) =>
             ((item.authOnly && isAuth) || (!item.authOnly && !isAuth)) && (
               <ListItem key={item.text} disablePadding>
+                {/* TODO don't use component={Link} */}
                 <ListItemButton
                   component={Link}
                   to={item.path}
@@ -60,8 +61,9 @@ export const Navbar = memo(() => {
               </ListItem>
             )
         )}
-        <button>test</button>
-        <ThemeSwitcher />
+        {/* TODO check button  */}
+        {/* <button>test</button> */}
+        {/* <ThemeSwitcher /> */}
       </List>
     </Box>
   );
@@ -91,8 +93,8 @@ export const Navbar = memo(() => {
           >
             StockManager
           </Typography>
-          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            <ThemeSwitcher />
+          <Box sx={{ display: { xs: 'flex', sm: 'block' } }}>
+            {/* <ThemeSwitcher /> */}
             {navbarItems.map(
               (item) =>
                 ((item.authOnly && isAuth) || (!item.authOnly && !isAuth)) && (

@@ -1,15 +1,15 @@
 import { ErrorPage } from '@/pages/ErrorPage';
 import { LoginPage } from '@/pages/LoginPage';
 import { MainPage } from '@/pages/MainPage';
-import { ProfileEditPage } from '@/pages/ProfileEditPage';
 import { ProfilePage } from '@/pages/ProfilePage';
+import { ProfileSettingsPage } from '@/pages/ProfileSettingsPage';
 import { RegisterPage } from '@/pages/RegisterPage';
 import {
   AppRoute,
   getRouteLogin,
   getRouteMain,
-  getRouteProfileEdit,
   getRouteProfile,
+  getRouteProfileSettings,
   getRouteRegister,
 } from '@/shared/consts/router';
 import { AppRouteProps } from '@/shared/types/router';
@@ -25,9 +25,9 @@ export const routeConfig: Record<AppRoute, AppRouteProps> = {
     element: <ProfilePage />,
     authOnly: true,
   },
-  [AppRoute.PROFILE_EDIT]: {
-    path: getRouteProfileEdit(),
-    element: <ProfileEditPage />,
+  [AppRoute.PROFILE_SETTINGS]: {
+    path: getRouteProfileSettings(),
+    element: <ProfileSettingsPage />,
     authOnly: true,
   },
   [AppRoute.LOGIN]: {

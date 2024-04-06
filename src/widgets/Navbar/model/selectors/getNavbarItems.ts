@@ -19,15 +19,33 @@ export const getNavbarItems = createSelector(getUserAuthData, (userData) => {
 
   // auth routes
   if (userData) {
-    sidebarItemsList
-      .push
-      // {
-      //   path: getRouteProfile(userData.id),
-      //   Icon: ProfileIcon,
-      //   text: 'Профиль',
-      //   authOnly: true,
-      // },
-      ();
+    sidebarItemsList.push(
+      {
+        path: '/',
+        text: 'Товары',
+        authOnly: true,
+      },
+      {
+        path: '/',
+        text: 'Поступления',
+        authOnly: true,
+      },
+      {
+        path: '/',
+        text: 'Отчисления',
+        authOnly: true,
+      },
+      {
+        path: '/',
+        text: 'Пользователи',
+        authOnly: true,
+      },
+      {
+        path: '/',
+        text: 'Управление',
+        authOnly: true,
+      }
+    );
   }
 
   return sidebarItemsList;

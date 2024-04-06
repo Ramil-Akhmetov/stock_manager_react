@@ -9,18 +9,18 @@ import { StoreProvider } from '@/app/providers/StoreProvider';
 import { ThemeProvider } from '@/app/providers/ThemeProvider';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <StoreProvider>
-        <ThemeProvider>
-          <SnackbarProvider>
-            <CssBaseline />
-            <ErrorBoundary>
-              <App />
-            </ErrorBoundary>
-          </SnackbarProvider>
-        </ThemeProvider>
-      </StoreProvider>
-    </BrowserRouter>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <BrowserRouter>
+    <StoreProvider>
+      <ThemeProvider>
+        <SnackbarProvider>
+          <CssBaseline />
+          <ErrorBoundary>
+            <App />
+          </ErrorBoundary>
+        </SnackbarProvider>
+      </ThemeProvider>
+    </StoreProvider>
+  </BrowserRouter>
+  // </React.StrictMode>
 );

@@ -9,14 +9,16 @@ import {
 import Typography from '@mui/material/Typography';
 import { memo, useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { useLogoutUser } from '@/features/LogoutUser';
 import { getUserAuthData } from '@/entities/User';
+import { getRouteProfile, getRouteProfileSettings } from '@/shared/consts/router';
 
 export const AvatarDropdown = memo(() => {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const authData = useSelector(getUserAuthData);
-
   const { logout } = useLogoutUser();
+  const navigate = useNavigate();
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -26,11 +28,20 @@ export const AvatarDropdown = memo(() => {
     setAnchorElUser(null);
   }, []);
 
-  // TODO maybe add logout as feature
   const onLogout = useCallback(async () => {
     await logout();
     setAnchorElUser(null);
   }, [logout]);
+
+  const onProfileClick = useCallback(() => {
+    navigate(getRouteProfile(authData?.id));
+    setAnchorElUser(null);
+  }, [navigate]);
+
+  const onProfileSettingsClick = useCallback(() => {
+    navigate(getRouteProfileSettings());
+    setAnchorElUser(null);
+  }, [navigate]);
 
   if (!authData) {
     return null;
@@ -59,8 +70,11 @@ export const AvatarDropdown = memo(() => {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
-        <MenuItem onClick={handleCloseUserMenu}>
+        <MenuItem onClick={onProfileClick}>
           <Typography textAlign="center">Профиль</Typography>
+        </MenuItem>
+        <MenuItem onClick={onProfileSettingsClick}>
+          <Typography textAlign="center">Настройки</Typography>
         </MenuItem>
         <MenuItem onClick={onLogout}>
           <Typography textAlign="center">Выход</Typography>
