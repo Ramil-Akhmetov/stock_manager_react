@@ -6,12 +6,18 @@ const usersApi = rtkApi.injectEndpoints({
   endpoints: (build) => ({
     getUsers: build.query<
       { data: User[]; meta: PaginationMeta },
-      { limit: number; page: number; order: 'asc' | 'desc'; orderBy: string }
+      {
+        limit: number;
+        page: number;
+        order: 'asc' | 'desc';
+        orderBy: string;
+        search?: string;
+      }
     >({
-      query: ({ limit, page, order, orderBy }) => ({
+      query: ({ limit, page, order, orderBy, search }) => ({
         method: 'GET',
         url: '/users',
-        params: { limit, page, order, orderBy },
+        params: { limit, page, order, orderBy, search },
       }),
     }),
   }),

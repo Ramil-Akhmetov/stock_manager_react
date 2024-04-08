@@ -2,7 +2,6 @@ import {
   Avatar,
   Box,
   Button,
-  FormControl,
   Paper,
   Table,
   TableBody,
@@ -13,12 +12,12 @@ import {
   TableRow,
   TableSortLabel,
   TextField,
+  Toolbar,
   Typography,
 } from '@mui/material';
-import { memo, useState } from 'react';
-import { Form, Link } from 'react-router-dom';
+import { ChangeEvent, memo, useCallback, useState } from 'react';
 import { getCreateUser } from '@/shared/consts/router';
-import { LoadingButton } from '@/shared/ui/LoadingButton';
+import { useDebounce } from '@/shared/lib/hooks/useDebounce.ts';
 import { useGetUsers } from '../../api/usersApi';
 
 interface UsersTableProps {}
@@ -28,13 +27,23 @@ const UsersTable = memo((props: UsersTableProps) => {
   const [limit, setLimit] = useState(10);
   const [orderBy, setOrderBy] = useState('created_at');
   const [order, setOrder] = useState<'asc' | 'desc'>('desc');
+  const [search, setSearch] = useState('');
+  const debouncedSearch = useDebounce(search);
 
   const { isLoading, data } = useGetUsers({
     limit,
     page: page + 1,
     order,
     orderBy,
+    search: debouncedSearch,
   });
+
+  const onChangeSearch = useCallback(
+    (evt: ChangeEvent<HTMLInputElement>) => {
+      setSearch(evt.target.value);
+    },
+    [setSearch]
+  );
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -67,13 +76,18 @@ const UsersTable = memo((props: UsersTableProps) => {
         <Button variant="contained" color="primary" href={getCreateUser()}>
           Добавить
         </Button>
-        <TextField type="text" placeholder="Поиск" size="small" />
+        <TextField
+          type="text"
+          placeholder="Поиск"
+          size="small"
+          value={search}
+          onChange={onChangeSearch}
+        />
       </Box>
       <TableContainer component={Paper}>
-        {/* <Toolbar sx={{ pl: { sm: 2 } }}>
-        <Typography variant="h6">Activity logs</Typography>
-      </Toolbar> */}
-        {/* search field for users */}
+        <Toolbar sx={{ pl: { sm: 2 } }}>
+          <Typography variant="h6">Пользователи</Typography>
+        </Toolbar>
 
         <Table sx={{ minWidth: 650 }}>
           <TableHead>

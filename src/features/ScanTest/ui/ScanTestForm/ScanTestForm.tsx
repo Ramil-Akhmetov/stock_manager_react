@@ -60,12 +60,12 @@ const ScanTestForm = memo(() => {
         onChange={onChangeBarcode}
         onKeyDown={onKeyDownBarcode}
       />
-      <TextField label="test" variant="outlined" fullWidth />
       <Button type="submit" variant="contained" color="primary">
         Submit
       </Button>
     </form>
   );
 });
+// 123456789 "Enter"
 
 export default ScanTestForm;
