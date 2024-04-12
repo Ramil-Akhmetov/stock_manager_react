@@ -1,23 +1,15 @@
 import { User } from '@/entities/User';
 import { rtkApi } from '@/shared/api/rtkApi';
-import { PaginationMeta } from '@/shared/types/paginationMeta';
+import { QueryFilters } from '@/shared/types/queryFilters.ts';
+import { ResponseWithPagination } from '@/shared/types/response.ts';
 
 const usersApi = rtkApi.injectEndpoints({
   endpoints: (build) => ({
-    getUsers: build.query<
-      { data: User[]; meta: PaginationMeta },
-      {
-        limit: number;
-        page: number;
-        order: 'asc' | 'desc';
-        orderBy: string;
-        search?: string;
-      }
-    >({
-      query: ({ limit, page, order, orderBy, search }) => ({
+    getUsers: build.query<ResponseWithPagination<User[]>, QueryFilters>({
+      query: (params) => ({
         method: 'GET',
         url: '/users',
-        params: { limit, page, order, orderBy, search },
+        params,
       }),
     }),
   }),

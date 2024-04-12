@@ -5,6 +5,7 @@ import {
   Reducer,
   ReducersMapObject,
 } from '@reduxjs/toolkit';
+import { CreateUserSchema } from '@/features/CreateUser';
 import { LoginSchema } from '@/features/LoginUser';
 import { RegisterUserSchema } from '@/features/RegisterUser';
 import { ResetPasswordSchema } from '@/features/ResetPassword';
@@ -21,6 +22,7 @@ export interface StateSchema {
   counter?: CounterSchema;
   loginForm?: LoginSchema;
   registerUser?: RegisterUserSchema;
+  createUser?: CreateUserSchema;
   resetPassword?: ResetPasswordSchema;
   barcodeForm?: BarcodeSchema;
 }
