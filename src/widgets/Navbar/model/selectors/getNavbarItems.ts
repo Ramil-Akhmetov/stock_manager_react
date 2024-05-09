@@ -1,6 +1,10 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { getUserAuthData } from '@/entities/User';
-import { getRouteLogin, getRouteRegister } from '@/shared/consts/router';
+import {
+  getRouteLogin,
+  getRouteRegister,
+  getRouteUsers,
+} from '@/shared/consts/router';
 import { NavbarItem } from '../types/navbar.ts';
 
 export const getNavbarItems = createSelector(getUserAuthData, (userData) => {
@@ -36,7 +40,7 @@ export const getNavbarItems = createSelector(getUserAuthData, (userData) => {
         authOnly: true,
       },
       {
-        path: '/',
+        path: getRouteUsers(),
         text: 'Пользователи',
         authOnly: true,
       },

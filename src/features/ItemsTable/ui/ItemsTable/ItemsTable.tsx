@@ -1,6 +1,4 @@
 import {
-  Avatar,
-  Box,
   Paper,
   Table,
   TableBody,
@@ -14,13 +12,13 @@ import {
   Typography,
 } from '@mui/material';
 import { memo, useState } from 'react';
-import { useGetUsers } from '../../api/usersApi';
+import { useGetItems } from '../../api/itemsApi';
 
-interface UsersTableProps {
+interface ItemsTableProps {
   search?: string;
 }
 
-const UsersTable = memo((props: UsersTableProps) => {
+const ItemsTable = memo((props: ItemsTableProps) => {
   const { search, ...otherProps } = props;
 
   const [page, setPage] = useState(0);
@@ -28,7 +26,7 @@ const UsersTable = memo((props: UsersTableProps) => {
   const [orderBy, setOrderBy] = useState('created_at');
   const [order, setOrder] = useState<'asc' | 'desc'>('desc');
 
-  const { isLoading, data } = useGetUsers({
+  const { isLoading, data } = useGetItems({
     limit,
     page: page + 1,
     order,
@@ -61,7 +59,7 @@ const UsersTable = memo((props: UsersTableProps) => {
   return (
     <TableContainer component={Paper}>
       <Toolbar sx={{ pl: { sm: 2 } }}>
-        <Typography variant="h6">Пользователи</Typography>
+        <Typography variant="h6">Предметы</Typography>
       </Toolbar>
 
       <Table sx={{ minWidth: 650 }}>
@@ -69,40 +67,59 @@ const UsersTable = memo((props: UsersTableProps) => {
           <TableRow>
             <TableCell>
               <TableSortLabel
-                active={orderBy === 'surname'}
-                direction={orderBy === 'surname' ? order : 'desc'}
-                onClick={() => handleSort('surname')}
+                active={orderBy === 'code'}
+                direction={orderBy === 'code' ? order : 'desc'}
+                onClick={() => handleSort('code')}
               >
-                ФИО
+                Код
               </TableSortLabel>
             </TableCell>
             <TableCell>
               <TableSortLabel
-                active={orderBy === 'email'}
-                direction={orderBy === 'email' ? order : 'desc'}
-                onClick={() => handleSort('email')}
+                active={orderBy === 'name'}
+                direction={orderBy === 'name' ? order : 'desc'}
+                onClick={() => handleSort('name')}
               >
-                Email
+                Название
               </TableSortLabel>
             </TableCell>
             <TableCell>
               <TableSortLabel
-                active={orderBy === 'phone'}
-                direction={orderBy === 'phone' ? order : 'desc'}
-                onClick={() => handleSort('phone')}
+                active={orderBy === 'quantity'}
+                direction={orderBy === 'quantity' ? order : 'desc'}
+                onClick={() => handleSort('quantity')}
               >
-                Номер телефона
+                Количество
               </TableSortLabel>
             </TableCell>
             <TableCell>
               <TableSortLabel
-                active={orderBy === 'description'}
-                direction={orderBy === 'description' ? order : 'desc'}
-                onClick={() => handleSort('description')}
+                active={orderBy === 'unit'}
+                direction={orderBy === 'unit' ? order : 'desc'}
+                onClick={() => handleSort('unit')}
               >
-                Роли
+                Единица измерения
               </TableSortLabel>
             </TableCell>
+            <TableCell>
+              <TableSortLabel
+                active={orderBy === 'category_id'}
+                direction={orderBy === 'category_id' ? order : 'desc'}
+                onClick={() => handleSort('category_id')}
+              >
+                Категория
+              </TableSortLabel>
+            </TableCell>
+            <TableCell>
+              <TableSortLabel
+                active={orderBy === 'room_id'}
+                direction={orderBy === 'room_id' ? order : 'desc'}
+                onClick={() => handleSort('room_id')}
+              >
+                Помещение
+              </TableSortLabel>
+            </TableCell>
+            <TableCell>Ответственное лицо</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -118,19 +135,17 @@ const UsersTable = memo((props: UsersTableProps) => {
               key={row.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell component="th" scope="row">
-                <Box
-                  sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}
-                >
-                  <Avatar src={row.photo} />
-                  <Typography>
-                    {row.surname} {row.name} {row.patronymic}
-                  </Typography>
-                </Box>
+              <TableCell>{row.code}</TableCell>
+              <TableCell>{row.name}</TableCell>
+              <TableCell>{row.quantity}</TableCell>
+              <TableCell>{row.unit || '-'}</TableCell>
+              <TableCell>{row?.category?.name}</TableCell>
+              <TableCell>{row?.room?.name}</TableCell>
+              <TableCell>
+                {row?.room?.current_responsible?.user?.surname}{' '}
+                {row?.room?.current_responsible?.user?.name}{' '}
+                {row?.room?.current_responsible?.user?.patronymic}
               </TableCell>
-              <TableCell>{row.email}</TableCell>
-              <TableCell>{row.phone}</TableCell>
-              <TableCell>{row.roles}</TableCell>
             </TableRow>
           ))}
           {data?.meta.total === 0 && (
@@ -157,4 +172,4 @@ const UsersTable = memo((props: UsersTableProps) => {
   );
 });
 
-export default UsersTable;
+export default ItemsTable;

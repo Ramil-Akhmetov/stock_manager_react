@@ -1,4 +1,4 @@
-import { SortOrder } from './sort.ts';
+import { SortOrder } from './order.ts';
 
 export interface QueryFilters {
   limit: number;

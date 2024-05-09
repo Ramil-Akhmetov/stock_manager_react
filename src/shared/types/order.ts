@@ -1,6 +1,6 @@
 export type SortOrder = 'asc' | 'desc';
 
-export enum Sort {
+export enum Order {
   ASC = 'asc',
   DESC = 'desc',
 }
