@@ -1,6 +1,6 @@
 import { PaginationMeta } from './paginationMeta.ts';
 
-export interface Response<T> {
+export interface ResponseApi<T> {
   data: T;
 }
 export interface ResponseWithPagination<T> {

@@ -5,6 +5,7 @@ import {
   Reducer,
   ReducersMapObject,
 } from '@reduxjs/toolkit';
+import { CategoryEditSchema } from '@/features/CategoryEdit';
 import { CreateUserSchema } from '@/features/CreateUser';
 import { JurnalSchema } from '@/features/Jurnal';
 import { LoginSchema } from '@/features/LoginUser';
@@ -26,9 +27,10 @@ export interface StateSchema {
   createUser?: CreateUserSchema;
   resetPassword?: ResetPasswordSchema;
   barcodeForm?: BarcodeSchema;
+  categoryEdit?: CategoryEditSchema;
 
   // TODO DELTE
-  jurnal: JurnalSchema;
+  // jurnal: JurnalSchema;
 }
 
 export type StateSchemaKey = keyof StateSchema;

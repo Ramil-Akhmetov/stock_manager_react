@@ -89,7 +89,7 @@ const ResetPasswordForm = memo(() => {
     <Box>
       <Grid container spacing={2} component="form" onSubmit={onResetPassword}>
         <Grid item xs={12}>
-          <Typography variant="h4">Изменить пароль</Typography>
+          <Typography variant="h6">Изменение пароля</Typography>
         </Grid>
         <Grid item xs={12}>
           <TextField

@@ -16,6 +16,7 @@
     "@mui/icons-material": "^5.14.7",
     "@mui/material": "^5.14.7",
     "@reduxjs/toolkit": "^1.9.5",
+    "jsbarcode": "^3.11.6",
     "mui-file-input": "^4.0.4",
     "mui-tel-input": "^5.1.2",
     "notistack": "^3.0.1",

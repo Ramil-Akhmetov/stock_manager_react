@@ -38,7 +38,10 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'warn',
     'import/no-extraneous-dependencies': 'warn',
     '@conarti/feature-sliced/layers-slices': 'warn',
+    'react/jsx-no-useless-fragment': 'off',
+    '@typescript-eslint/no-explicit-any': 'warn',
 
     'react-hooks/rules-of-hooks': 'error',
+    'react/jsx-filename-extension': 'warn',
   },
 };

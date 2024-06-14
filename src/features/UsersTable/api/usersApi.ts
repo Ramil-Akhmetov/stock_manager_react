@@ -1,7 +1,7 @@
-import { User } from '@/entities/User';
 import { rtkApi } from '@/shared/api/rtkApi';
+import { User } from '@/shared/entites/User/user.ts';
 import { QueryFilters } from '@/shared/types/queryFilters.ts';
-import { ResponseWithPagination } from '@/shared/types/response.ts';
+import { ResponseWithPagination } from '@/shared/types/responseApi.ts';
 
 const usersApi = rtkApi.injectEndpoints({
   endpoints: (build) => ({

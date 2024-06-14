@@ -26,7 +26,7 @@ export const getNavbarItems = createSelector(getUserAuthData, (userData) => {
     sidebarItemsList.push(
       {
         path: '/',
-        text: 'Товары',
+        text: 'Объекты',
         authOnly: true,
       },
       {

@@ -1,62 +1,80 @@
-import { Avatar, Grid, TextField } from '@mui/material';
-import { memo } from 'react';
+import { Box, Button, TextField, Typography } from '@mui/material';
+import { useSnackbar } from 'notistack';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Page } from '@/widgets/Page';
+import { ResetPasswordForm } from '@/features/ResetPassword';
 import { getUserAuthData } from '@/entities/User';
-import { LoadingButton } from '@/shared/ui/LoadingButton';
+import { LOCAL_STORAGE_ACCESS_KEY } from '@/shared/consts/localstorage.ts';
 
 function ProfileSettingsPage() {
   const authData = useSelector(getUserAuthData);
+  const { enqueueSnackbar } = useSnackbar();
+
+  const [email, setEmail] = useState(authData?.email || '');
+  const [error, setError] = useState('');
+
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch(`${__API__}/change_email/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem(
+            LOCAL_STORAGE_ACCESS_KEY
+          )}`,
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        setError(data.message);
+        enqueueSnackbar(data.message, { variant: 'error' });
+      } else {
+        setError('');
+        enqueueSnackbar(data.message, { variant: 'success' });
+        setEmail(data.email);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <Page>
-      {/* profile settings page with resetting password changing email and phone and disabled inputs for name surname and patronymic       */}
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Avatar
-            alt={authData?.name}
-            src={authData?.photo}
-            sx={{ width: 150, height: 150 }}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField fullWidth label="Имя" value={authData?.name} disabled />
-        </Grid>
-        <Grid item xs={12}>
+      <Box style={{ width: '50%', margin: 'auto' }}>
+        <Box sx={{ mb: 10 }}>
+          <Typography variant="h6" gutterBottom sx={{ mb: 2 }}>
+            Изменение email
+          </Typography>
           <TextField
+            label="Email"
+            value={email}
             fullWidth
-            label="Фамилия"
-            value={authData?.surname}
-            disabled
+            sx={{ mb: 2 }}
+            error={!!error}
+            helperText={error}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setError('');
+            }}
           />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
+          <Button
+            variant="contained"
+            color="primary"
             fullWidth
-            label="Отчество"
-            value={authData?.patronymic}
-            disabled
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField fullWidth label="Email" value={authData?.email} disabled />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            fullWidth
-            label="Телефон"
-            value={authData?.phone}
-            disabled
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <LoadingButton loading={false} variant="contained" fullWidth>
-            Сохранить
-          </LoadingButton>
-        </Grid>
-      </Grid>
+            onClick={handleSubmit}
+          >
+            Изменить email
+          </Button>
+        </Box>
+
+        <ResetPasswordForm />
+      </Box>
     </Page>
   );
 }
 
-export default memo(ProfileSettingsPage);
+export default ProfileSettingsPage;

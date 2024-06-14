@@ -1,7 +1,7 @@
 import { rtkApi } from '@/shared/api/rtkApi';
 import { Item } from '@/shared/entites/Item/item.ts';
 import { QueryFilters } from '@/shared/types/queryFilters.ts';
-import { ResponseWithPagination } from '@/shared/types/response.ts';
+import { ResponseWithPagination } from '@/shared/types/responseApi.ts';
 
 const jurnalApi = rtkApi.injectEndpoints({
   endpoints: (build) => ({

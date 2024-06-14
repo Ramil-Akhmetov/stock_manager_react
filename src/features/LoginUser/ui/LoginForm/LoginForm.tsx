@@ -40,8 +40,7 @@ const LoginForm = memo(() => {
         const response = await loginUser({ email, password }).unwrap();
         localStorage.setItem(LOCAL_STORAGE_ACCESS_KEY, response.token);
 
-        dispatch(initAuthData());
-        navigate(getRouteMain());
+        await dispatch(initAuthData());
         enqueueSnackbar('Вы успешно вошли в систему', { variant: 'success' });
       } catch (e) {
         if (isErrorResponse(e)) {
@@ -118,9 +117,9 @@ const LoginForm = memo(() => {
         >
           Войти
         </LoadingButton>
-        <Link to="/" variant="body2" component={RouterLink}>
-          Забыли пароль?
-        </Link>
+        {/* <Link to="/" variant="body2" component={RouterLink}> */}
+        {/*  Забыли пароль? */}
+        {/* </Link> */}
       </Box>
     </Box>
   );

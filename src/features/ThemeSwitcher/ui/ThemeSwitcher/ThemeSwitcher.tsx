@@ -14,7 +14,7 @@ export const ThemeSwitcher = memo(() => {
     localStorage.setItem(LOCAL_STORAGE_THEME_MODE_KEY, newMode);
   };
   return (
-    <IconButton onClick={toggleTheme} color="inherit">
+    <IconButton onClick={toggleTheme} color="inherit" sx={{ mr: 1 }}>
       {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
     </IconButton>
   );

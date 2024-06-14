@@ -12,7 +12,10 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useLogoutUser } from '@/features/LogoutUser';
 import { getUserAuthData } from '@/entities/User';
-import { getRouteProfile, getRouteProfileSettings } from '@/shared/consts/router';
+import {
+  getRouteProfile,
+  getRouteProfileSettings,
+} from '@/shared/consts/router';
 
 export const AvatarDropdown = memo(() => {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
@@ -33,8 +36,8 @@ export const AvatarDropdown = memo(() => {
     setAnchorElUser(null);
   }, [logout]);
 
-  const onProfileClick = useCallback(() => {
-    navigate(getRouteProfile(authData?.id));
+  const onSettingsClick = useCallback(() => {
+    navigate(getRouteProfileSettings());
     setAnchorElUser(null);
   }, [navigate]);
 
@@ -70,10 +73,10 @@ export const AvatarDropdown = memo(() => {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
-        <MenuItem onClick={onProfileClick}>
-          <Typography textAlign="center">Профиль</Typography>
-        </MenuItem>
-        <MenuItem onClick={onProfileSettingsClick}>
+        <Typography textAlign="center" sx={{ pl: 2, pr: 2, pb: 1, pt: 1 }}>
+          {authData.surname} {authData.name} {authData.patronymic}
+        </Typography>
+        <MenuItem onClick={onSettingsClick}>
           <Typography textAlign="center">Настройки</Typography>
         </MenuItem>
         <MenuItem onClick={onLogout}>

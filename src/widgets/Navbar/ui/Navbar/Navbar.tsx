@@ -1,91 +1,127 @@
-import MenuIcon from '@mui/icons-material/Menu';
+import { Menu, MenuItem } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
-import Drawer from '@mui/material/Drawer';
-import IconButton from '@mui/material/IconButton';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import { memo } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { AvatarDropdown } from '@/widgets/AvatarDropdown/index.ts'; // TODO fix widget in widgets
+import { Link, useNavigate } from 'react-router-dom';
+import { AvatarDropdown } from '@/widgets/AvatarDropdown/index.ts';
 import { ThemeSwitcher } from '@/features/ThemeSwitcher';
 import { getUserAuthData } from '@/entities/User';
 import { getRouteMain } from '@/shared/consts/router.ts';
-import { getNavbarItems } from '../../model/selectors/getNavbarItems.ts';
 
-const drawerWidth = 240;
+export function Navbar() {
+  const navigate = useNavigate();
+  const authData = useSelector(getUserAuthData);
 
-export const Navbar = memo(() => {
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-  const navbarItems = useSelector(getNavbarItems);
-  const isAuth = useSelector(getUserAuthData);
+  // State for menu anchors
+  const [usersAnchorEl, setUsersAnchorEl] = React.useState<null | HTMLElement>(
+    null
+  );
+  const [goodsAnchorEl, setGoodsAnchorEl] = React.useState<null | HTMLElement>(
+    null
+  );
+  const [paramsAnchorEl, setParamsAnchorEl] =
+    React.useState<null | HTMLElement>(null);
 
-  const handleDrawerToggle = () => {
-    setMobileOpen((prevState) => !prevState);
+  // Boolean values to check if menus are open
+  const isUsersOpen = Boolean(usersAnchorEl);
+  const isGoodsOpen = Boolean(goodsAnchorEl);
+  const isParamsOpen = Boolean(paramsAnchorEl);
+
+  // Event handlers to open menus
+  const openUsers = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setUsersAnchorEl(event.currentTarget);
   };
 
-  // TODO create component from it
-  const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Typography
-        variant="h6"
-        sx={{ my: 2, textDecoration: 'none' }}
-        component={Link}
-        to={getRouteMain()}
-        color="inherit"
-      >
-        StockManager
-      </Typography>
-      <Divider />
-      <List>
-        {navbarItems.map(
-          (item) =>
-            ((item.authOnly && isAuth) || (!item.authOnly && !isAuth)) && (
-              <ListItem key={item.text} disablePadding>
-                {/* TODO don't use component={Link} */}
-                <ListItemButton
-                  component={Link}
-                  to={item.path}
-                  sx={{ textAlign: 'center' }}
-                >
-                  <ListItemText primary={item.text} />
-                </ListItemButton>
-              </ListItem>
-            )
-        )}
-        {/* TODO check button  */}
-        {/* <button>test</button> */}
-        {/* <ThemeSwitcher /> */}
-      </List>
-    </Box>
-  );
+  const openGoods = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setGoodsAnchorEl(event.currentTarget);
+  };
+
+  const openParams = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setParamsAnchorEl(event.currentTarget);
+  };
+
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isKeeper, setIsKeeper] = useState(false);
+
+  useEffect(() => {
+    console.log('authdata', authData);
+    setIsAdmin(authData?.roles[0].name === 'Администратор');
+    setIsKeeper(authData?.roles[0].name === 'Кладовщик');
+  }, [authData]);
+
+  // Navigation handlers
+  const gotoUsers = () => {
+    navigate('/users');
+    setUsersAnchorEl(null);
+  };
+
+  const gotoInviteCodes = () => {
+    navigate('/invite_codes');
+    setUsersAnchorEl(null);
+  };
+
+  const gotoItems = () => {
+    navigate('/items');
+    setGoodsAnchorEl(null);
+  };
+
+  const gotoCheckins = () => {
+    navigate('/checkins');
+    setGoodsAnchorEl(null);
+  };
+
+  const gotoTransfers = () => {
+    navigate('/transfers');
+    setGoodsAnchorEl(null);
+  };
+
+  const gotoCheckouts = () => {
+    navigate('/checkouts');
+    setGoodsAnchorEl(null);
+  };
+
+  const gotoCategories = () => {
+    navigate('/categories');
+    setParamsAnchorEl(null);
+  };
+
+  const gotoTypes = () => {
+    navigate('/types');
+    setParamsAnchorEl(null);
+  };
+
+  const gotoRooms = () => {
+    navigate('/rooms');
+    setParamsAnchorEl(null);
+  };
+
+  const gotoSuppliers = () => {
+    navigate('/suppliers');
+    setParamsAnchorEl(null);
+  };
+
+  const gotoLogin = () => {
+    navigate('/login');
+  };
+
+  const gotoRegister = () => {
+    navigate('/register');
+  };
 
   return (
     <Box sx={{ display: 'flex' }}>
       <AppBar component="nav" position="fixed">
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
-          >
-            <MenuIcon />
-          </IconButton>
           <Typography
             variant="h6"
             sx={{
               flexGrow: 1,
-              display: { xs: 'none', sm: 'block', textDecoration: 'none' },
+              display: { sm: 'block', textDecoration: 'none' },
             }}
             component={Link}
             to={getRouteMain()}
@@ -94,43 +130,110 @@ export const Navbar = memo(() => {
             StockManager
           </Typography>
           <Box sx={{ display: { xs: 'flex', sm: 'block' } }}>
-            {/* <ThemeSwitcher /> */}
-            {navbarItems.map(
-              (item) =>
-                ((item.authOnly && isAuth) || (!item.authOnly && !isAuth)) && (
-                  <Button
-                    component={Link}
-                    to={item.path}
-                    key={item.text}
-                    sx={{ color: '#fff' }}
-                  >
-                    {item.text}
-                  </Button>
-                )
+            {authData ? (
+              <>
+                {/* Button for Users Management */}
+                {isAdmin && (
+                  <>
+                    <Button
+                      id="users-button"
+                      aria-controls={isUsersOpen ? 'users-menu' : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={isUsersOpen ? 'true' : undefined}
+                      onClick={openUsers}
+                      sx={{ color: '#fff' }}
+                    >
+                      Управление пользователями
+                    </Button>
+                    <Menu
+                      id="users-menu"
+                      anchorEl={usersAnchorEl}
+                      open={isUsersOpen}
+                      onClose={() => setUsersAnchorEl(null)}
+                      MenuListProps={{ 'aria-labelledby': 'users-button' }}
+                    >
+                      <MenuItem onClick={gotoUsers}>Пользователи</MenuItem>
+                      <MenuItem onClick={gotoInviteCodes}>
+                        Коды приглашения
+                      </MenuItem>
+                    </Menu>
+                  </>
+                )}
+
+                {/* Button for Goods Management */}
+                <Button
+                  id="goods-button"
+                  aria-controls={isGoodsOpen ? 'goods-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={isGoodsOpen ? 'true' : undefined}
+                  onClick={openGoods}
+                  sx={{ color: '#fff' }}
+                >
+                  Управление объектами
+                </Button>
+                <Menu
+                  id="goods-menu"
+                  anchorEl={goodsAnchorEl}
+                  open={isGoodsOpen}
+                  onClose={() => setGoodsAnchorEl(null)}
+                  MenuListProps={{ 'aria-labelledby': 'goods-button' }}
+                >
+                  <MenuItem onClick={gotoItems}>Объекты</MenuItem>
+                  {(isAdmin || isKeeper) && (
+                    <>
+                      <MenuItem onClick={gotoCheckins}>Поступления</MenuItem>
+                      <MenuItem onClick={gotoCheckouts}>Cписания</MenuItem>
+                    </>
+                  )}
+                  <MenuItem onClick={gotoTransfers}>Перемещения</MenuItem>
+                </Menu>
+
+                {(isAdmin || isKeeper) && (
+                  <>
+                    {/* Button for Parameters Management */}
+                    <Button
+                      id="params-button"
+                      aria-controls={isParamsOpen ? 'params-menu' : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={isParamsOpen ? 'true' : undefined}
+                      onClick={openParams}
+                      sx={{ color: '#fff' }}
+                    >
+                      Управление параметрами
+                    </Button>
+                    <Menu
+                      id="params-menu"
+                      anchorEl={paramsAnchorEl}
+                      open={isParamsOpen}
+                      onClose={() => setParamsAnchorEl(null)}
+                      MenuListProps={{ 'aria-labelledby': 'params-button' }}
+                    >
+                      <MenuItem onClick={gotoCategories}>
+                        Категории объектов
+                      </MenuItem>
+                      <MenuItem onClick={gotoTypes}>Типы объектов</MenuItem>
+                      <MenuItem onClick={gotoRooms}>Помещения</MenuItem>
+                      <MenuItem onClick={gotoSuppliers}>Поставщики</MenuItem>
+                    </Menu>
+                  </>
+                )}
+
+                <ThemeSwitcher />
+              </>
+            ) : (
+              <>
+                <Button onClick={gotoLogin} sx={{ color: '#fff' }}>
+                  Вход
+                </Button>
+                <Button onClick={gotoRegister} sx={{ color: '#fff' }}>
+                  Регистрация
+                </Button>
+              </>
             )}
           </Box>
-          <AvatarDropdown />
+          {authData && <AvatarDropdown />}
         </Toolbar>
       </AppBar>
-      <nav>
-        <Drawer
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
-            display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': {
-              boxSizing: 'border-box',
-              width: drawerWidth,
-            },
-          }}
-        >
-          {drawer}
-        </Drawer>
-      </nav>
     </Box>
   );
-});
+}

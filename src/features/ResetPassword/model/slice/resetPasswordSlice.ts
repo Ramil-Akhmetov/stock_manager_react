@@ -3,8 +3,8 @@ import { ResetPasswordSchema } from '../types/resetPasswordSchema.ts';
 
 const initialState: ResetPasswordSchema = {
   old_password: '',
-  new_password: 'password',
-  new_password_confirmation: 'password',
+  new_password: '',
+  new_password_confirmation: '',
 };
 
 export const resetPasswordSlice = createSlice({
